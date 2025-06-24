@@ -1,18 +1,23 @@
 import React from 'react'
-import { NavLink } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 import Header from '~/components/Header';
 import { useAuth } from '~/hooks/useAuth'
 
-function AuthLockoutLayout({ children }: React.PropsWithChildren<{}>) {
+function AuthLockoutLayout() {
     const { user } = useAuth();
 
     if (user) {
-      return (
-        <>
-        <Header />
-          {children}
-        </>
-      )
+return (
+        <div className="h-screen flex flex-col">
+            <nav className="">
+                <Header />
+            </nav>
+            <main className="flex-grow overflow-hidden">
+                <Outlet />
+            </main>
+        </div>
+    );
+
     }
 
     return (

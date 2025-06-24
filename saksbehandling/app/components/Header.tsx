@@ -2,12 +2,18 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "FirebaseConfig";
 import { useState } from "react";
 import { useAuth } from "~/hooks/useAuth";
+import { useLocation, useNavigate } from "react-router";
 
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showLogOutPopup, setShowLogOutPopup] = useState(false);
   const [showDeleteAccountPopup, setShowDeleteAccountPopup] = useState(false);
   const { user, logout, deleteAccount, loading } = useAuth();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const showBackButton = location.pathname !== "/";
 
   const handleLogout = () => {
     logout();
@@ -18,28 +24,43 @@ function Header() {
     deleteAccount();
     setShowDeleteAccountPopup(false);
   };
-    if (loading) {
-        return <div className="loader">Loading...</div>; // Replace with your loading component
-    }
+
+  if (loading) {
+    return <div className="loader">Loading...</div>; // Replace with your loading component
+  }
+
   return (
     <header className="bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-end">
+        <div className="flex h-16 items-center justify-between">
+          {/* Left side: Back button */}
+          <div>
+            {showBackButton && (
+              <button
+                onClick={() => navigate(-1)}
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                ← Tilbake
+              </button>
+            )}
+          </div>
+
+          {/* Right side: User info and dropdown */}
           <div className="relative">
             {user!.email}
             <button
               onClick={() => setShowDropdown((prev) => !prev)}
               type="button"
-              className="overflow-hidden rounded-full border border-gray-300 shadow-inner dark:border-gray-600"
+              className="overflow-hidden rounded-full border border-gray-300 shadow-inner dark:border-gray-600 ml-4"
             >
               <span className="sr-only">User menu</span>
- <svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 100 120"
                 className="w-12 h-12"
                 fill="currentColor"
               >
-            <path
+                <path
                   d="M12.26,21.44C29.87,2.01,50.18-8.56,65.43,8.73
                     c4,0.19,7.57,1.52,10.57,4.34c6.28,5.89,7.23,16.92,4.38,25.69v7.63
                     c1.94,1.27,3.18,3.66,3.76,6.39c0.37,1.76,0.46,3.69,0.29,5.54
@@ -71,7 +92,7 @@ function Header() {
                     c0.13-1.38,0.06-2.82-0.21-4.13c-0.38-1.83-1.09-3.29-2.07-3.54
                     c-1.08-0.27-1.8-1.24-1.8-2.31h0V36.7z"
                 />
-              </svg> 
+              </svg>
             </button>
 
             {showDropdown && (

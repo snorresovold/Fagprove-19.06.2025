@@ -9,13 +9,12 @@ type UserRole = keyof typeof UserRoleDict;
 type CaseStatus = "åpen" | "lukket";
 type CaseCategory = "Teknisk problem" | "Forespørsel" | "Tilbakemelding";
 
-interface User {
+interface CustomUserData {
   id: string;
   email: string;
   role: UserRole;
   createdAt: Date;
 }
-
 
 interface Comment {
   id: string;
@@ -23,7 +22,6 @@ interface Comment {
   commenter: string;
   createdAt: Date;
 }
-
 
 interface Case {
   id: string;
@@ -34,9 +32,10 @@ interface Case {
   creator: string;
   createdAt: Date;
   updatedAt: Date;
+  priority: number;
   comments?: Comment[];
 }
 
-export type { UserRole, CaseStatus, CaseCategory, User, Comment, Case };
-// ikke i forrige linje da det er en variabel ikke en type
+export type { UserRole, CaseStatus, CaseCategory, CustomUserData, Comment, Case };
+// ikke i forrige linje da det er en verdi ikke en type
 export { UserRoleDict };
