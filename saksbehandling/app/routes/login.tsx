@@ -72,6 +72,7 @@ function Login() {
         Logg inn
       </button>
     </form>
+    
   </div>
 </div>
   );

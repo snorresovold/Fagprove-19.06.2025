@@ -20,6 +20,7 @@ export const useAuth = () => {
     return subscribe;
   }, []);
 
+  
   const logout = async () => {
     try {
       await auth.signOut();
@@ -41,20 +42,29 @@ export const useAuth = () => {
     }
   };
 
-  const getCustomUserData = async () => {
-    const docRef = doc(db, "users", user!.uid);
-    const docSnap = await getDoc(docRef);
+const getCustomUserData = async () => {
+  const docRef = doc(db, "users", user!.uid);
+  const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      console.log("No such document!");
-      return
-    }
-    setCustomUserData(docSnap.data() as CustomUserData)
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    console.log("Document data:", data);
+
+    const customData: CustomUserData = {
+      id: user!.uid,
+      email: data.email,
+      role: data.role,
+      createdAt: data.createdAt.toDate(), 
+    };
+    console.log(customData.email, customData.role)
+
+    setCustomUserData(customData);
+  } else {
+    console.log("No such document!, goddam!!!");
+    return;
   }
-
-  return { user, loading, logout, deleteAccount, customUserData };
 };
 
 
+  return { user, loading, logout, deleteAccount, customUserData, getCustomUserData};
+};

@@ -13,6 +13,7 @@ export default function CasePage() {
   const [caseData, setCaseData] = useState<Case>();
   const [email, setEmail] = useState<string>();
   const [commentIntput, setCommentInput] = useState<string>();
+  const [role, setRole] = useState<string>();
   const [checked, setChecked] = useState<boolean>(false);
 
   useEffect(() => {
@@ -20,8 +21,10 @@ export default function CasePage() {
       getUserDataFromID(caseData.creator).then((creator) => {
         if (creator) {
           setEmail(creator.email);
+          setRole(creator.role)
         } else {
           setEmail("Unknown user");
+          setRole("")
         }
       });
     }
@@ -85,7 +88,7 @@ async function handleSubmitComment() {
           createdAt: data.createdAt,
         };
       })
-      .reverse(); // Reverse to show latest comments at the bottom
+      .reverse();
     console.log("Comments:", comments);
 
     return {
@@ -118,9 +121,7 @@ async function handleSubmitComment() {
   }
   return (
   <div className="flex flex-col h-full overflow-hidden px-4 py-6">
-    {/* Case data box */}
     <div className="bg-white shadow-md rounded-xl p-6 max-w-4xl mx-auto mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Left and center part */}
       <div className="md:col-span-2">
         <div className="text-gray-600 mb-1">
           <p className="text-3xl font-bold mb-3 text-gray-800">
@@ -143,7 +144,6 @@ async function handleSubmitComment() {
       </div>
     </div>
 
-    {/* Comments and closed status */}
     <div className="flex-grow overflow-y-auto">
       {caseData.comments && caseData.comments.length > 0 ? (
         <ul className="space-y-4 pb-28 max-w-md mx-auto">
@@ -162,7 +162,6 @@ async function handleSubmitComment() {
       )}
     </div>
 
-    {/* Comment input section */}
     {caseData.status === "åpen" && (
       <div className="shrink-0 p-4">
         <div className="w-full max-w-md mx-auto">
@@ -183,7 +182,7 @@ async function handleSubmitComment() {
               </button>
             </div>
 
-            {customUserData?.role !== "behandler" && (
+            {role === "behandler" && (
               <fieldset>
                 <legend className="sr-only">Checkboxes</legend>
                 <div className="flex flex-col items-start gap-3">
@@ -200,6 +199,7 @@ async function handleSubmitComment() {
                 </div>
               </fieldset>
             )}
+
           </div>
         </div>
       </div>

@@ -19,8 +19,9 @@ function CaseComp({ c }: { c: Case }) {
       }, [c.creator]);
 
   return (
-    <div className="max-w-md mx-auto my-4">
       <div key={c.id} className="border border-gray-300 p-6 rounded-2xl shadow-md bg-white hover:shadow-lg transition-shadow duration-300">
+        
+        <p className="text-sm text-gray-600 mb-1">Prioritetsgrad: {c.priority}</p>
         <p className="text-sm text-gray-600 mb-1">
           {c.category} sak av <span className="font-medium">{email}</span>
         </p>
@@ -38,7 +39,6 @@ function CaseComp({ c }: { c: Case }) {
           Se sak
         </NavLink>
       </div>
-    </div>
   )
 }
 
