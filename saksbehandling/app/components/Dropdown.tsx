@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { UserRoleDict, type UserRole } from '~/interfaces';
+import { UserRoleDict, type UserRole } from '~/interfaces/interfaces';
 
 type DropdownProps = {
   onRoleSelect: (role: UserRole) => void;

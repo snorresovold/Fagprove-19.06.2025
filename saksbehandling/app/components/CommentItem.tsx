@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getUserDataFromID } from "~/utils";
-import type { Comment } from "~/interfaces";
+import { getUserDataFromID } from "~/utils/utils";
+import type { Comment } from "~/interfaces/interfaces";
 
 export default function CommentItem({ comment }: { comment: Comment }) {
     const [email, setEmail] = useState<string>();

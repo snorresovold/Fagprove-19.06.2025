@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router'
-import type { Case } from '~/interfaces'
-import { getUserDataFromID } from '~/utils';
+import type { Case } from '~/interfaces/interfaces'
+import { getUserDataFromID } from '~/utils/utils';
 
 function CaseComp({ c }: { c: Case }) {
       const [email, setEmail] = useState<string>();

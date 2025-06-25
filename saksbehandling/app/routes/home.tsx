@@ -10,9 +10,9 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "FirebaseConfig";
 import { useAuth } from "~/hooks/useAuth";
-import type { Case, CustomUserData } from "~/interfaces";
+import type { Case, CustomUserData } from "~/interfaces/interfaces";
 import CaseComp from "~/components/CaseComp";
-import { getUserDataFromID } from "~/utils";
+import { getUserDataFromID } from "~/utils/utils";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -20,7 +20,6 @@ export function meta({}: Route.MetaArgs) {
     { name: "description", content: "Velkommen til Saksbehandling!" },
   ];
 }
-
 
 export default function Home() {
   const { user } = useAuth();
@@ -106,28 +105,28 @@ export default function Home() {
       return 0;
     });
 
-useEffect(() => {
-  const fetchData = async () => {
-    if (!user) return;
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user) return;
 
-    const userData = await getUserDataFromID(user.uid);
-    SetCustomUserData(userData);
+      const userData = await getUserDataFromID(user.uid);
+      SetCustomUserData(userData);
 
-    await getDocuments(userData);
+      await getDocuments(userData);
 
-    setLoading(false);
-  };
+      setLoading(false);
+    };
 
-  fetchData();
-}, [user]);
+    fetchData();
+  }, [user]);
 
-if (loading) {
-  return (
-    <div className="text-center mt-10 text-lg text-gray-400">
-      Laster inn brukerdata...
-    </div>
-  );
-}
+  if (loading) {
+    return (
+      <div className="text-center mt-10 text-lg text-gray-400">
+        Laster inn brukerdata...
+      </div>
+    );
+  }
   return (
     <>
       <div className="p-6">
@@ -172,8 +171,8 @@ if (loading) {
           </div>
         </div>
       </div>
-  <div className="mt-6 ml-6 mr-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-16">       
-   {filteredAndSortedCases?.map((c) => (
+      <div className="mt-6 ml-6 mr-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-16">
+        {filteredAndSortedCases?.map((c) => (
           <CaseComp
             key={c.id}
             c={{
@@ -257,7 +256,7 @@ if (loading) {
                   onChange={handleChange}
                 >
                   <option value="">Velg kategori</option>
-                  <option value="Forespørsel">Fårespørsel</option>
+                  <option value="Forespørsel">Forespørsel</option>
                   <option value="Tilbakemelding">Tilbakemelding</option>
                   <option value="Teknisk problem">Teknisk problem</option>
                 </select>
@@ -286,7 +285,11 @@ if (loading) {
                 <button
                   type="submit"
                   className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-                  onSelect={() => getDocuments()}
+                  onClick={async () => {
+                    if (!user) return;
+                    const userData = await getUserDataFromID(user.uid);
+                    await getDocuments(userData);
+                  }}
                 >
                   Opprett Sak
                 </button>

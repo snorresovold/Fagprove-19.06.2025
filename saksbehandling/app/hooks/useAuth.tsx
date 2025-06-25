@@ -3,7 +3,7 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { auth } from "FirebaseConfig";
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "FirebaseConfig";
-import type { CustomUserData } from "~/interfaces";
+import type { CustomUserData } from "~/interfaces/interfaces";
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);

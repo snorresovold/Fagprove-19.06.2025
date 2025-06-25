@@ -4,7 +4,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "FirebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import Dropdown from "~/components/Dropdown";
-import type { UserRole } from "~/interfaces";
+import type { UserRole } from "~/interfaces/interfaces";
 
 function Registration() {
   const [email, setEmail] = useState<string>();

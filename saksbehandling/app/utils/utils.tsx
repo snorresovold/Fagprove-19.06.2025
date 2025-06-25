@@ -1,7 +1,7 @@
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "FirebaseConfig";
-import type { CustomUserData } from "./interfaces";
+import type { CustomUserData } from "../interfaces/interfaces";
 
 
 async function getUserDataFromID(id: string): Promise<CustomUserData> {
