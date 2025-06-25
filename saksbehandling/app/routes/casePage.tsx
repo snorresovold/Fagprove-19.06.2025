@@ -8,7 +8,7 @@ import type { Case, Comment } from "~/interfaces/interfaces";
 import { getUserDataFromID } from "~/utils/utils";
 
 export default function CasePage() {
-  const { user, customUserData } = useAuth();
+  const { user } = useAuth();
   const { id } = useParams();
   const [caseData, setCaseData] = useState<Case>();
   const [email, setEmail] = useState<string>();
@@ -187,7 +187,7 @@ export default function CasePage() {
                 </button>
               </div>
 
-              {role === "behandler" && (
+              {role == "bruker" && (
                 <fieldset>
                   <legend className="sr-only">Checkboxes</legend>
                   <div className="flex flex-col items-start gap-3">

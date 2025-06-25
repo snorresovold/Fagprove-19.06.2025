@@ -7,4 +7,5 @@ export default [
     ]),
     route("/login", "routes/login.tsx"),
     route("/register", "routes/register.tsx"),
+    route("/privacy", "routes/privacyPolicy.tsx")
 ] satisfies RouteConfig;
